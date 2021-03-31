@@ -1,25 +1,18 @@
-class Form{
-     input(){
-        let name = createInput()
-        name.value('Enter your name')
-        name.position(displayWidth/2,displayHeight/2)
-        let button = createButton()
-        button.position(displayWidth/2,(displayHeight/2)+20)
-        button.mousePressed(function (){
-            i++
-            let playerref = 'Player'+i
-            database.ref('/').update({
-                numPlayer:i
-            })
-            database.ref(playerref).set({
-                namevalue:name.value(),
-                x:displayHeight-100
-            })
-        })
-        name.hide()
-        button.hide()
-    }
-    next_Stage=function(){
+class Form {
 
+    constructor() {
+      this.input = createInput('Enter you name');
+      this.button = createButton('Play');
+      this.greeting = createElement('h2');
+      this.title = createElement('h2');
+      this.reset = createButton('Reset')
+      this.reset.position(displayWidth-90,displayHeight/7)
+      this.name = this.input.value()
     }
-}
+    hide(){
+      this.greeting.hide();
+      this.button.hide();
+      this.input.hide();
+    }
+  }
+  
