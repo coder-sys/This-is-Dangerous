@@ -6,27 +6,28 @@ class  Game{
     gameIteration=function(){
         if(numplayers>1){
         if(gameState===1){
-            let i = 400
-            for(let index=0;index<numplayers;index++){
-              planes.push(new Plane(230,i))
-              i -= 100
+            for(let i = 0;i<numplayers;i++){
+                let yval = 400;
+                planes.push(new Plane(230,yval))
+                yval -= 100 
             }
-            for(let numPlanes=0;numPlanes<planes.length;numPlanes++){
+            for(let numPlanes=0;numPlanes<numplayers;numPlanes++){
                 planes[numPlanes].appear()
             }
-           for(let index in allPlayers){
-               console.log(true)
-                if(allPlayers[index].name===formobj.input.value()){
-                    console.log(planes[this.gameIndex-1])
-                    camera.position.x=planes[this.gameIndex-1].body.position.x
-                    camera.position.y=planes[this.gameIndex-1].body.position.y
-                    this.gameIndex+=1
-                }
+            for(let i in allPlayers){
+                this.gameIndex+=1
+            if(keyDown(UP_ARROW) && allPlayers[i].name === formobj.input.value()){
+                database.ref('players/'+formobj.input.value()).update({
+                    'static':false
+                })
+                let b = database.ref('players/'+formobj.input.value())
+                b.on('value',function (data){
+                    a = data.val().static
+                })
+                Matter.Body.setStatic(planes[this.gameIndex-1].body,a)
+            }
             }
         }
     }
-    //for(let i in planes){
-      //  i.write(i.body.position.x,i.body.position.y)
-    //}
 }
 }

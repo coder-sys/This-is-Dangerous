@@ -9,7 +9,5 @@ function Plane(x,y){
         rect(0,0,20,50)
         pop()
     }
-    this.write=function(data1,data2){
-        return data1+''+data2
-    }
+
 }

@@ -6,9 +6,10 @@ let world,engine
 var formobj
 let numplayers
 let planes = []
-let gameState
+let gameState = 0;
 let gameLoop
 let allPlayers
+let alldPlayers
 function setup() {
   createCanvas(800,400);
   engine = Engine.create()
@@ -16,6 +17,10 @@ function setup() {
   Engine.run(engine)
   formobj = new Form()
   gameLoop = new Game()
+  let playerss = database.ref('/')
+  playerss.on('value',(data)=>{
+    alldPlayers=data.val().numPlayer
+  })
 }
 
 function draw(){
@@ -27,13 +32,14 @@ function draw(){
   })
   formobj.button.mousePressed(()=>{
     database.ref('/').update({
-        'numPlayer':numplayers+1
+        'numPlayer':numplayers+1,
     })
     formobj.hide()
     formobj.title.position(400,200)
     database.ref('players/'+formobj.input.value()).set({
       name:formobj.input.value(),
       traveledDistance:0,
+      'static':true
     })
     let gamestateref = database.ref('/')
     gamestateref.on('value',(data)=>{
